@@ -1,0 +1,2 @@
+include ':app', ':modules:parser-impl-csv', ':modules:parser-api'
+rootProject.name='CSV'
