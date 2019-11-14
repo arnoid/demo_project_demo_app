@@ -8,11 +8,12 @@ import com.example.csv.logic.data.Row
 import com.example.csv.logic.usecase.LoadAndSaveRecordsUseCase
 import com.example.csv.logic.usecase.ReadHeadersUseCase
 import com.example.csv.logic.usecase.ReadRowsUseCase
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
+open class MainViewModel : ViewModel() {
 
     @Inject
     lateinit var loadAndSaveRecordsUseCase: LoadAndSaveRecordsUseCase
@@ -25,7 +26,7 @@ class MainViewModel : ViewModel() {
     private val rowsLiveData = MutableLiveData<List<Row>>()
     private val headersLiveData = MutableLiveData<Row>()
 
-    fun viewStateLiveData(): LiveData<ViewState> {
+    open fun viewStateLiveData(): LiveData<ViewState> {
         return viewStateLiveData
     }
 
@@ -33,7 +34,7 @@ class MainViewModel : ViewModel() {
         viewStateLiveData.postValue(viewState)
     }
 
-    fun rowsLiveData(): LiveData<List<Row>> {
+    open fun rowsLiveData(): LiveData<List<Row>> {
         return rowsLiveData
     }
 
@@ -41,7 +42,7 @@ class MainViewModel : ViewModel() {
         rowsLiveData.postValue(newRows)
     }
 
-    fun headersLiveData(): LiveData<Row> {
+    open fun headersLiveData(): LiveData<Row> {
         return headersLiveData
     }
 
@@ -49,8 +50,8 @@ class MainViewModel : ViewModel() {
         headersLiveData.postValue(newHeaders)
     }
 
-    fun retrieveRows() {
-        viewModelScope.launch(Dispatchers.IO) {
+    open fun retrieveRows(coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO) {
+        viewModelScope.launch(coroutineDispatcher) {
             postViewState(ViewState.Loading)
 
             try {

@@ -10,12 +10,12 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class UseCaseModule(
+open class UseCaseModule(
     private val context: Context
 ) {
 
     @Provides
-    fun provideLoadAndSaveRecordsUseCase(
+    open fun provideLoadAndSaveRecordsUseCase(
         parser: Parser<List<String>>,
         repository: IRepository
     ): LoadAndSaveRecordsUseCase {
@@ -23,12 +23,12 @@ class UseCaseModule(
     }
 
     @Provides
-    fun provideReadHeadersUseCase(repository: IRepository): ReadHeadersUseCase {
+    open fun provideReadHeadersUseCase(repository: IRepository): ReadHeadersUseCase {
         return ReadHeadersUseCase(repository)
     }
 
     @Provides
-    fun provideReadRowsUseCase(repository: IRepository): ReadRowsUseCase {
+    open fun provideReadRowsUseCase(repository: IRepository): ReadRowsUseCase {
         return ReadRowsUseCase(repository)
     }
 }

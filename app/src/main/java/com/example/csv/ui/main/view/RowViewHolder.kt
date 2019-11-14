@@ -2,6 +2,7 @@ package com.example.csv.ui.main.view
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.example.csv.R
 import com.example.csv.logic.data.Cell
 import com.example.csv.logic.data.Row
 import kotlinx.android.synthetic.main.cell_row.view.*
@@ -26,10 +27,14 @@ open class RowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     open fun prepareDob(cell: Cell) = convertDateToRenderFormat(cell.data)
 
     private fun convertDateToRenderFormat(dateString: String): String {
-        return inputDateFormatter.parse(dateString)
-            .let { date ->
-                outputDateFormatter.format(date)
-            }
+        return try {
+            inputDateFormatter.parse(dateString)
+                .let { date ->
+                    outputDateFormatter.format(date)
+                }
+        } catch (e: Exception) {
+            itemView.resources.getString(R.string.unknown_date)
+        }
     }
 
     companion object {

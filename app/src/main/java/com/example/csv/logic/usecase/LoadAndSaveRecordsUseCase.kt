@@ -9,7 +9,7 @@ import com.example.csv.logic.data.Row
 import com.example.parser.api.Parser
 import java.io.Reader
 
-class LoadAndSaveRecordsUseCase(
+open class LoadAndSaveRecordsUseCase(
     private val context: Context,
     private val parser: Parser<List<String>>,
     private val repository: IRepository,
@@ -17,7 +17,7 @@ class LoadAndSaveRecordsUseCase(
     private val getReader: () -> Reader = { context.resources.openRawResource(R.raw.issues).reader() }
 ) {
 
-    fun execute(force: Boolean = false) {
+    open fun execute(force: Boolean = false) {
         if (!repository.isEmpty() && !force) {
             return
         }

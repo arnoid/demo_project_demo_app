@@ -46,9 +46,17 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
 
+    androidTestImplementation 'androidx.test:core:1.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
+    androidTestImplementation "org.mockito:mockito-android:2.28.2"
+    androidTestImplementation 'androidx.arch.core:core-testing:2.1.0'
+    androidTestImplementation "org.mockito:mockito-core:3.1.0"
+    androidTestImplementation 'com.jraska.livedata:testing-ktx:1.1.1'
+    androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.1.1'
+
 }

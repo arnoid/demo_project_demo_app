@@ -8,6 +8,6 @@ import javax.inject.Singleton
 @Component(modules = [ParserModule::class, UseCaseModule::class, RepositoryModule::class])
 interface MainComponent {
 
-    fun inject(viewModel: MainViewModel)
+    fun inject(viewModel: MainViewModel): MainViewModel
 
 }

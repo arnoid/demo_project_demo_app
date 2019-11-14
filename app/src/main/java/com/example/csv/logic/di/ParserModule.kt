@@ -6,10 +6,10 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class ParserModule {
+open class ParserModule {
 
     @Provides
-    fun provideParser(): Parser<List<String>> {
+    open fun provideParser(): Parser<List<String>> {
         return CsvParser()
     }
 }

@@ -38,9 +38,7 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-
-        CsvApplication.mainComponent.inject(viewModel)
+        viewModel = CsvApplication.mainComponent.inject(ViewModelProviders.of(this).get(MainViewModel::class.java))
 
         viewModel.viewStateLiveData().observe(this, Observer { viewState -> this@MainFragment.onViewState(viewState) })
 
@@ -77,7 +75,7 @@ class MainFragment : Fragment() {
 
         //empty state
         when (viewState) {
-            is ViewState.Loading, is ViewState.Error -> {
+            is ViewState.Error -> {
                 v_empty_state.visibility = View.VISIBLE
             }
             else -> {

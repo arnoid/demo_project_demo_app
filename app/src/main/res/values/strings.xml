@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">CSV</string>
     <string name="loading_indicator">Please wait</string>
+    <string name="unknown_date">UNKNOWN</string>
 </resources>

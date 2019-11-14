@@ -7,11 +7,11 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class RepositoryModule {
+open class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideRepository(): IRepository {
+    open fun provideRepository(): IRepository {
         return InMemoryRepository()
     }
 }
