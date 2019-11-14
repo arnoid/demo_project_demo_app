@@ -1,16 +1,8 @@
 package com.example.csv.logic.data
 
-data class Row(var cells: MutableList<Cell>) {
-    fun clear() {
-        cells.clear()
-    }
-
-    fun addAll(row: Row) {
-        cells.addAll(row.cells)
-    }
-
+data class Row(var cells: List<Cell>) {
     companion object {
-        fun from(cells: MutableList<Cell>): Row {
+        fun from(cells: List<Cell>): Row {
             return Row(cells)
         }
     }

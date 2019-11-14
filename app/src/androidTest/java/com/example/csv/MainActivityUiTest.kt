@@ -85,7 +85,7 @@ class MainActivityUiTest {
     fun testHeadersDisplay() {
         viewStateLiveData.postValue(ViewState.Ready)
 
-        val headers = Row.from(mutableListOf(Cell.from("C1"), Cell.from("C2"), Cell.from("C3"), Cell.from("C4")))
+        val headers = Row.from(listOf(Cell.from("C1"), Cell.from("C2"), Cell.from("C3"), Cell.from("C4")))
 
         headersLiveData.postValue(headers)
 
@@ -104,10 +104,10 @@ class MainActivityUiTest {
         val outputDate1 = "11/11/1111"
         val outputDate2 = "12/11/1111"
 
-        val row1 = Row.from(mutableListOf(Cell.from("C1"), Cell.from("C2"), Cell.from("C3"), Cell.from(inputDate1)))
-        val row2 = Row.from(mutableListOf(Cell.from("A1"), Cell.from("A2"), Cell.from("A3"), Cell.from(inputDate2)))
+        val row1 = Row.from(listOf(Cell.from("C1"), Cell.from("C2"), Cell.from("C3"), Cell.from(inputDate1)))
+        val row2 = Row.from(listOf(Cell.from("A1"), Cell.from("A2"), Cell.from("A3"), Cell.from(inputDate2)))
 
-        rowsLiveData.postValue(mutableListOf(row1, row2))
+        rowsLiveData.postValue(listOf(row1, row2))
 
         onView(withText(row1.cells[0].data)).check(matches(isDisplayed()))
         onView(withText(row1.cells[1].data)).check(matches(isDisplayed()))
@@ -126,9 +126,9 @@ class MainActivityUiTest {
 
         val inputDate1 = "1111-11-"
 
-        val row1 = Row.from(mutableListOf(Cell.from("C1"), Cell.from("C2"), Cell.from("C3"), Cell.from(inputDate1)))
+        val row1 = Row.from(listOf(Cell.from("C1"), Cell.from("C2"), Cell.from("C3"), Cell.from(inputDate1)))
 
-        rowsLiveData.postValue(mutableListOf(row1))
+        rowsLiveData.postValue(listOf(row1))
 
         onView(withText(row1.cells[0].data)).check(matches(isDisplayed()))
         onView(withText(row1.cells[1].data)).check(matches(isDisplayed()))
@@ -141,35 +141,40 @@ class MainActivityUiTest {
     fun testRowsDisplayIncorrectNumberOfCells() {
         viewStateLiveData.postValue(ViewState.Ready)
 
-        val row1 = Row.from(mutableListOf(Cell.from("C1")))
+        var row = Row.from(listOf(Cell.from("C1")))
 
-        rowsLiveData.postValue(mutableListOf(row1))
+        rowsLiveData.postValue(listOf(row))
 
-        row1.cells.add(Cell.from("C2"))
-        row1.cells.add(Cell.from("C3"))
-        row1.cells.add(Cell.from("C4"))
-        row1.cells.add(Cell.from("C5"))
-        row1.cells.add(Cell.from("C6"))
+        row = Row.from(
+            listOf(
+                Cell.from("C1"),
+                Cell.from("C2"),
+                Cell.from("C3"),
+                Cell.from("C4"),
+                Cell.from("C5"),
+                Cell.from("C6")
+            )
+        )
 
-        rowsLiveData.postValue(mutableListOf(row1))
+        rowsLiveData.postValue(listOf(row))
 
-        onView(withText(row1.cells[0].data)).check(matches(isDisplayed()))
-        onView(withText(row1.cells[1].data)).check(matches(isDisplayed()))
-        onView(withText(row1.cells[2].data)).check(matches(isDisplayed()))
+        onView(withText(row.cells[0].data)).check(matches(isDisplayed()))
+        onView(withText(row.cells[1].data)).check(matches(isDisplayed()))
+        onView(withText(row.cells[2].data)).check(matches(isDisplayed()))
         try {
             //this is date field and it will not be parsed
-            onView(withText(row1.cells[3].data)).check(matches(isDisplayed()))
+            onView(withText(row.cells[3].data)).check(matches(isDisplayed()))
             fail("This view should not be in the view hierarchy")
         } catch (e: Exception) {
         }
         try {
-            onView(withText(row1.cells[4].data)).check(matches(isDisplayed()))
+            onView(withText(row.cells[4].data)).check(matches(isDisplayed()))
             fail("This view should not be in the view hierarchy")
         } catch (e: Exception) {
         }
 
         try {
-            onView(withText(row1.cells[5].data)).check(matches(isDisplayed()))
+            onView(withText(row.cells[5].data)).check(matches(isDisplayed()))
             fail("This view should not be in the view hierarchy")
         } catch (e: Exception) {
         }

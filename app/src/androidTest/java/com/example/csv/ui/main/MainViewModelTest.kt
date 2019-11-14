@@ -69,8 +69,8 @@ class MainViewModelTest {
 
     @Test
     fun testRetrieveRows() {
-        val headers = Row.from(mutableListOf(Cell.from("")))
-        val rows = mutableListOf(Row.from(mutableListOf(Cell.from(""))))
+        val headers = Row.from(listOf(Cell.from("")))
+        val rows = listOf(Row.from(listOf(Cell.from(""))))
         whenever(readHeadersUseCase.execute()).doReturn(headers)
         whenever(readRowsUseCase.execute()).doReturn(rows)
 
@@ -163,7 +163,7 @@ class MainViewModelTest {
 
     @Test
     fun testRetrieveRowsAndReadRowsUseCaseThrowsException() {
-        val headers = Row.from(mutableListOf(Cell.from("")))
+        val headers = Row.from(listOf(Cell.from("")))
         whenever(readHeadersUseCase.execute()).doReturn(headers)
 
         val exception = RuntimeException("dfsfsd")

@@ -21,7 +21,7 @@ class ReadHeadersUseCaseTest {
 
     @Before
     fun before() {
-        headers = Row(mutableListOf())
+        headers = Row(emptyList())
         repository = mock {
             on { readHeaders() } doReturn headers
         }
@@ -40,12 +40,10 @@ class ReadHeadersUseCaseTest {
 
     @Test
     fun testNonEmptyHeaders() {
-        headers.cells.addAll(
-            mutableListOf(
-                Cell.from("a"),
-                Cell.from("b"),
-                Cell.from("c")
-            )
+        headers.cells = listOf(
+            Cell.from("a"),
+            Cell.from("b"),
+            Cell.from("c")
         )
         val headers = useCase.execute()
 

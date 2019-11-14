@@ -16,12 +16,12 @@ class ReadRowsUseCaseTest {
 
     lateinit var useCase: ReadRowsUseCase
     lateinit var repository: IRepository
-    lateinit var rows: MutableList<Row>
+    lateinit var rows: List<Row>
 
 
     @Before
     fun before() {
-        rows = mutableListOf()
+        rows = emptyList()
         repository = mock {
             on { readRows() } doReturn rows
         }
@@ -40,9 +40,9 @@ class ReadRowsUseCaseTest {
 
     @Test
     fun testNonEmptyRows() {
-        rows.add(
+        rows = listOf(
             Row.from(
-                mutableListOf(
+                listOf(
                     Cell.from("a"),
                     Cell.from("b"),
                     Cell.from("c")

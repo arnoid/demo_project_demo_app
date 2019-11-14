@@ -8,7 +8,7 @@ import com.example.csv.logic.data.Row
 
 class RowsAdapter : RecyclerView.Adapter<RowViewHolder>() {
 
-    var headers: Row = Row.from(mutableListOf())
+    var headers: Row = Row.from(emptyList())
     var rows: List<Row> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RowViewHolder {

@@ -10,8 +10,8 @@ import kotlin.concurrent.write
 class InMemoryRepository : IRepository {
 
     private val readWriteLock = ReentrantReadWriteLock()
-    private val headers = Row.from(mutableListOf())
-    private val rows = mutableListOf<Row>()
+    private var headers = Row.from(emptyList())
+    private var rows = emptyList<Row>()
 
     override fun isEmpty(): Boolean {
         return readWriteLock.read {
@@ -21,7 +21,7 @@ class InMemoryRepository : IRepository {
 
     override fun clearRows() {
         readWriteLock.write {
-            rows.clear()
+            rows = emptyList<Row>()
         }
     }
 
@@ -39,23 +39,20 @@ class InMemoryRepository : IRepository {
 
     override fun saveHeaders(row: Row) {
         return readWriteLock.write {
-            headers.clear()
-            headers.addAll(row)
+            headers = row
         }
     }
 
     override fun saveRows(newRows: List<Row>) {
         return readWriteLock.write {
-            rows.clear()
-            rows.addAll(newRows)
+            rows = newRows
         }
     }
 
     override fun addRow(row: Row) {
         return readWriteLock.write {
-            rows.add(row)
+            rows = rows + row
         }
-
     }
 
 }
