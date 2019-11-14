@@ -71,8 +71,29 @@ class CsvParserTest {
 
     @Test
     fun testEmpty() {
-        val parsedValues = csvParser.parse("".reader())
-        assertTrue(parsedValues.isEmpty())
+        val parsedValues = csvParser.parse(EMPTY_VALUE.reader())
+        assertEquals(1, parsedValues.size)
+        assertEquals(1, parsedValues[0].size)
+    }
+
+    @Test
+    fun testEmptyNewLine() {
+        val parsedValues = csvParser.parse(EMPTY_VALUE_NEW_LINE.reader())
+        assertEquals(2, parsedValues.size)
+        assertEquals(1, parsedValues[0].size)
+        assertEquals(1, parsedValues[1].size)
+    }
+
+    @Test
+    fun testEmptyValues() {
+        val parsedValues = csvParser.parse(EMPTY_VALUES.reader())
+        assertEquals(1, parsedValues.size)
+        assertEquals(4, parsedValues[0].size)
+
+        assertTrue(parsedValues[0][0].isEmpty())
+        assertTrue(parsedValues[0][1].isEmpty())
+        assertTrue(parsedValues[0][2].isEmpty())
+        assertTrue(parsedValues[0][3].isEmpty())
     }
 
     @Test
@@ -111,5 +132,9 @@ class CsvParserTest {
         const val CELL_MULTIQUOTE = "\"  \n\"\"  dfadfafasf \""
 
         const val CELL_MULTIQUOTE_ESCAPED = "\"\"\"  \n\"\"\"\"  dfadfafasf \"\"\""
+
+        const val EMPTY_VALUES = ",,,"
+        const val EMPTY_VALUE = ""
+        const val EMPTY_VALUE_NEW_LINE = "\r\n"
     }
 }

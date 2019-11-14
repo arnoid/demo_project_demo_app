@@ -14,68 +14,64 @@ class CsvParser(
 
     override fun parse(input: Reader): List<List<String>> {
         val result = mutableListOf<List<String>>()
-        val bufferedInput = input.buffered()
 
-        while (true) {
-            val row = parseRow(bufferedInput)
+        FileLoop@ while (true) {
+            var endOfFile = false
 
-            if (row.isEmpty()) {
-                //no new lines available
-                break
-            } else {
-                result.add(row)
+            val row = mutableListOf<String>()
+            val cellBuilder = StringBuilder()
+
+            var isInContainer = false
+            var lastChar = ' '//anything but " (double quotes) char
+
+            RowLoop@ while (true) {
+                val next = input.read()
+                val nextChar = next.toChar()
+
+                if (next == EOF) {
+                    endOfFile = true
+                }
+
+                when {
+                    !isInContainer && (nextChar == DELIMITER_ROW || next == EOF) -> {
+                        //flush cell
+                        row.add(cellBuilder.toString())
+
+                        break@RowLoop
+                    }
+                    nextChar == cellDelimiter -> {
+                        row.add(cellBuilder.toString())
+                        cellBuilder.clear()
+                    }
+                    !isInContainer && nextChar == QUOTE && lastChar == QUOTE -> {
+                        //mimic for the double quote lookup
+                        //according to RFC4180 double quotes are allowed in quoted section ONLY
+                        isInContainer = true
+                        cellBuilder.append(QUOTE)
+                    }
+                    nextChar == QUOTE && isInContainer -> {
+                        isInContainer = false
+                    }
+                    nextChar == QUOTE -> {
+                        isInContainer = true
+                    }
+                    else -> {
+                        cellBuilder.append(nextChar)
+                    }
+                }
+
+                lastChar = nextChar
+            }
+
+            result.add(row)
+
+            if (endOfFile) {
+                break@FileLoop
             }
 
         }
 
         return result
-    }
-
-    private fun parseRow(input: Reader): List<String> {
-        val row = mutableListOf<String>()
-
-        val cellBuilder = StringBuilder()
-
-        var isInContainer = false
-        var lastChar = ' '//anything but " (double quotes) char
-
-        loop@ while (true) {
-            val next = input.read()
-            val nextChar = next.toChar()
-
-            when {
-                !isInContainer && (nextChar == DELIMITER_ROW || next == EOF) -> {
-                    //flush cell
-                    if (cellBuilder.isNotEmpty()) {
-                        row.add(cellBuilder.toString())
-                    }
-                    break@loop
-                }
-                nextChar == cellDelimiter -> {
-                    row.add(cellBuilder.toString())
-                    cellBuilder.clear()
-                }
-                !isInContainer && nextChar == QUOTE && lastChar == QUOTE -> {
-                    //mimic for the double quote lookup
-                    //according to RFC4180 double quotes are allowed in quoted section ONLY
-                    isInContainer = true
-                    cellBuilder.append(QUOTE)
-                }
-                nextChar == QUOTE && isInContainer -> {
-                    isInContainer = false
-                }
-                nextChar == QUOTE -> {
-                    isInContainer = true
-                }
-                else -> {
-                    cellBuilder.append(nextChar)
-                }
-            }
-
-            lastChar = nextChar
-        }
-
-        return row
     }
 
     companion object {
