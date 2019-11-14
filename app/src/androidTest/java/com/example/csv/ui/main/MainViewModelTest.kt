@@ -124,13 +124,9 @@ class MainViewModelTest {
                 assertTrue((history[1] as ViewState.Error).exception === exception)
             }
 
-        headersTestObserver
-            .awaitNextValue(1, TimeUnit.SECONDS)
-            .assertHistorySize(0)
+        headersTestObserver.assertNoValue()
 
-        rowsTestObserver
-            .awaitNextValue(1, TimeUnit.SECONDS)
-            .assertHistorySize(0)
+        rowsTestObserver.assertNoValue()
 
         verify(loadAndSaveRecordsUseCase).execute()
         verifyZeroInteractions(readHeadersUseCase)
@@ -158,13 +154,9 @@ class MainViewModelTest {
                 assertTrue((history[1] as ViewState.Error).exception === exception)
             }
 
-        headersTestObserver
-            .awaitNextValue(1, TimeUnit.SECONDS)
-            .assertHistorySize(0)
+        headersTestObserver.assertNoValue()
 
-        rowsTestObserver
-            .awaitNextValue(1, TimeUnit.SECONDS)
-            .assertHistorySize(0)
+        rowsTestObserver.assertNoValue()
 
         verify(loadAndSaveRecordsUseCase).execute()
         verify(readHeadersUseCase).execute()
@@ -198,9 +190,7 @@ class MainViewModelTest {
             .awaitNextValue(1, TimeUnit.SECONDS)
             .assertValue(headers)
 
-        rowsTestObserver
-            .awaitNextValue(1, TimeUnit.SECONDS)
-            .assertHistorySize(0)
+        rowsTestObserver.assertNoValue()
 
         verify(loadAndSaveRecordsUseCase).execute()
         verify(readHeadersUseCase).execute()
