@@ -1,6 +1,6 @@
 package com.example.parser.csv
 
-import com.example.parser.api.Parser
+import com.example.parser.api.IParser
 import java.io.Reader
 
 /**
@@ -10,7 +10,7 @@ import java.io.Reader
  */
 class CsvParser(
     private val cellDelimiter: Char = CSV_MODE
-) : Parser<List<String>>() {
+) : IParser<List<String>>() {
 
     override fun parse(input: Reader): List<List<String>> {
         val result = mutableListOf<List<String>>()

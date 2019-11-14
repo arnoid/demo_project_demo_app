@@ -13,7 +13,6 @@ import com.example.csv.logic.usecase.ReadRowsUseCase
 import com.jraska.livedata.test
 import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -26,7 +25,6 @@ class MainViewModelTest {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
-    @UseExperimental(ObsoleteCoroutinesApi::class)
 
     lateinit var viewModel: MainViewModel
 

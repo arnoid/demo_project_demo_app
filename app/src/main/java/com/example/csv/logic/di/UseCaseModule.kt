@@ -5,7 +5,7 @@ import com.example.csv.logic.data.IRepository
 import com.example.csv.logic.usecase.LoadAndSaveRecordsUseCase
 import com.example.csv.logic.usecase.ReadHeadersUseCase
 import com.example.csv.logic.usecase.ReadRowsUseCase
-import com.example.parser.api.Parser
+import com.example.parser.api.IParser
 import dagger.Module
 import dagger.Provides
 
@@ -16,7 +16,7 @@ open class UseCaseModule(
 
     @Provides
     open fun provideLoadAndSaveRecordsUseCase(
-        parser: Parser<List<String>>,
+        parser: IParser<List<String>>,
         repository: IRepository
     ): LoadAndSaveRecordsUseCase {
         return LoadAndSaveRecordsUseCase(context, parser, repository)

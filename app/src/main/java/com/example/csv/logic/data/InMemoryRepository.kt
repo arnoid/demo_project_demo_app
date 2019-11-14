@@ -4,6 +4,9 @@ import java.util.concurrent.locks.ReentrantReadWriteLock
 import kotlin.concurrent.read
 import kotlin.concurrent.write
 
+/**
+ * Simple in-memory implementation of repository
+ */
 class InMemoryRepository : IRepository {
 
     private val readWriteLock = ReentrantReadWriteLock()

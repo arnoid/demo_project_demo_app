@@ -32,7 +32,7 @@ class MainActivityUiTest {
     private var headersLiveData = MutableLiveData<Row>()
 
 
-    //TODO: test is not working on Android9
+    //TODO: test is not working on Android9. Seems it it connected to because of Dagger2
     //https://stackoverflow.com/questions/58061693/espresso-generating-filenotfoundexception-when-used-with-dagger
     @get:Rule
     var activityTestRule = object : ActivityTestRule<MainActivity>(MainActivity::class.java) {

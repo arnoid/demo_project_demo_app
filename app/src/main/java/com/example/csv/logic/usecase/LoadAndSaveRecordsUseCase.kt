@@ -6,12 +6,12 @@ import com.example.csv.R
 import com.example.csv.logic.data.Cell
 import com.example.csv.logic.data.IRepository
 import com.example.csv.logic.data.Row
-import com.example.parser.api.Parser
+import com.example.parser.api.IParser
 import java.io.Reader
 
 open class LoadAndSaveRecordsUseCase(
     private val context: Context,
-    private val parser: Parser<List<String>>,
+    private val parser: IParser<List<String>>,
     private val repository: IRepository,
     @VisibleForTesting
     private val getReader: () -> Reader = { context.resources.openRawResource(R.raw.issues).reader() }

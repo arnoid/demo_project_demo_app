@@ -1,13 +1,15 @@
 package com.example.parser.csv
 
-import com.example.parser.api.Parser
-import org.junit.Assert.assertEquals
+import com.example.parser.api.IParser
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
+import java.io.InputStream
+import java.io.InputStreamReader
 
 class CsvParserTest {
 
-    lateinit var csvParser: Parser<List<String>>
+    lateinit var csvParser: IParser<List<String>>
 
     @Before
     internal fun before() {
@@ -61,10 +63,40 @@ class CsvParserTest {
 
     @Test
     fun testMultiquoteCell() {
-        val parsedValues = csvParser.parse(CELL_MULTIQUTE_ESCAPED.reader())
+        val parsedValues = csvParser.parse(CELL_MULTIQUOTE_ESCAPED.reader())
         assertEquals(1, parsedValues.size)
         assertEquals(1, parsedValues[0].size)
-        assertEquals(CELL_MULTIQUTE, parsedValues[0][0])
+        assertEquals(CELL_MULTIQUOTE, parsedValues[0][0])
+    }
+
+    @Test
+    fun testEmpty() {
+        val parsedValues = csvParser.parse("".reader())
+        assertTrue(parsedValues.isEmpty())
+    }
+
+    @Test
+    fun testExceptionOnRead() {
+        var parsedValues: List<List<String>>? = null
+        try {
+            /**
+             * We can do this with mocks, but for single use, I think it would be easier to do this anonymous implementation
+             */
+            parsedValues = csvParser.parse(
+                object : InputStreamReader(
+                    object : InputStream() {
+                        override fun read(): Int {
+                            throw RuntimeException("")
+                        }
+                    }
+                ) {}
+            )
+            fail("Should propagate exception")
+        } catch (e: RuntimeException) {
+            //it is ok
+        }
+
+        assertNull(parsedValues)
     }
 
     companion object {
@@ -76,8 +108,8 @@ class CsvParserTest {
         const val CELL_MULTILINE = "d\nf23f\n\n\n23423r23tf 2 34r2f 2f 2\n\n23r2gf2\n\n23rf\n23r2gfg24g24g 24f234f3f"
         const val CELL_MULTILINE_ESCAPED = "\"$CELL_MULTILINE\""
 
-        const val CELL_MULTIQUTE = "\"  \n\"\"  dfadfafasf \""
+        const val CELL_MULTIQUOTE = "\"  \n\"\"  dfadfafasf \""
 
-        const val CELL_MULTIQUTE_ESCAPED = "\"\"\"  \n\"\"\"\"  dfadfafasf \"\"\""
+        const val CELL_MULTIQUOTE_ESCAPED = "\"\"\"  \n\"\"\"\"  dfadfafasf \"\"\""
     }
 }

@@ -1,6 +1,6 @@
 package com.example.csv.logic.di
 
-import com.example.parser.api.Parser
+import com.example.parser.api.IParser
 import com.example.parser.csv.CsvParser
 import dagger.Module
 import dagger.Provides
@@ -9,7 +9,7 @@ import dagger.Provides
 open class ParserModule {
 
     @Provides
-    open fun provideParser(): Parser<List<String>> {
+    open fun provideParser(): IParser<List<String>> {
         return CsvParser()
     }
 }

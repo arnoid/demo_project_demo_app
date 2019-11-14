@@ -4,14 +4,13 @@ import android.content.Context
 import com.example.csv.logic.data.Cell
 import com.example.csv.logic.data.IRepository
 import com.example.csv.logic.data.Row
-import com.example.parser.api.Parser
+import com.example.parser.api.IParser
 import com.nhaarman.mockitokotlin2.*
 import com.nhaarman.mockitokotlin2.internal.createInstance
 import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
-import org.mockito.stubbing.Answer
 import java.io.InputStreamReader
 
 class LoadAndSaveRecordsUseCaseTest {
@@ -19,8 +18,8 @@ class LoadAndSaveRecordsUseCaseTest {
     lateinit var useCase: LoadAndSaveRecordsUseCase
     lateinit var repository: IRepository
     lateinit var context: Context
-    lateinit var csvParser: Parser<List<String>>
-    lateinit var csvFileReader: InputStreamReader
+    lateinit var parser: IParser<List<String>>
+    lateinit var inputReader: InputStreamReader
 
     var isRepositoryEmpty = false
 
@@ -37,15 +36,15 @@ class LoadAndSaveRecordsUseCaseTest {
 
     @Before
     fun before() {
-        csvFileReader = mock()
-        csvParser = mock {
+        inputReader = mock()
+        parser = mock {
             on { parse(anyOrNull()) } doReturn listOf(headersRaw, rowRaw, rowRaw)
         }
         context = mock()
         repository = mock {
-            on { isEmpty() } doAnswer Answer<Boolean> { isRepositoryEmpty }
+            on { isEmpty() } doAnswer { isRepositoryEmpty }
         }
-        useCase = LoadAndSaveRecordsUseCase(context, csvParser, repository, { csvFileReader })
+        useCase = LoadAndSaveRecordsUseCase(context, parser, repository, { inputReader })
     }
 
     @Test
@@ -53,11 +52,11 @@ class LoadAndSaveRecordsUseCaseTest {
         isRepositoryEmpty = true
         useCase.execute()
 
-        verify(csvFileReader).close()
-        verifyNoMoreInteractions(csvFileReader)
+        verify(inputReader).close()
+        verifyNoMoreInteractions(inputReader)
 
-        verify(csvParser).parse(eq(csvFileReader))
-        verifyNoMoreInteractions(csvParser)
+        verify(parser).parse(eq(inputReader))
+        verifyNoMoreInteractions(parser)
 
         verify(repository).isEmpty()
         verify(repository).clearRows()
@@ -91,8 +90,8 @@ class LoadAndSaveRecordsUseCaseTest {
         isRepositoryEmpty = false
         useCase.execute()
 
-        verifyZeroInteractions(csvFileReader)
-        verifyZeroInteractions(csvParser)
+        verifyZeroInteractions(inputReader)
+        verifyZeroInteractions(parser)
 
         verify(repository).isEmpty()
         verifyNoMoreInteractions(repository)
@@ -103,11 +102,11 @@ class LoadAndSaveRecordsUseCaseTest {
         isRepositoryEmpty = false
         useCase.execute(true)
 
-        verify(csvFileReader).close()
-        verifyNoMoreInteractions(csvFileReader)
+        verify(inputReader).close()
+        verifyNoMoreInteractions(inputReader)
 
-        verify(csvParser).parse(eq(csvFileReader))
-        verifyNoMoreInteractions(csvParser)
+        verify(parser).parse(eq(inputReader))
+        verifyNoMoreInteractions(parser)
 
         verify(repository).isEmpty()
         verify(repository).clearRows()

@@ -7,6 +7,7 @@ import com.example.csv.logic.data.Cell
 import com.example.csv.logic.data.Row
 import kotlinx.android.synthetic.main.cell_row.view.*
 import java.text.SimpleDateFormat
+import java.util.*
 
 open class RowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -43,10 +44,10 @@ open class RowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         const val INDEX_ISSUES_COUNT = 2
         const val INDEX_DOB = 3
 
-        const val INPUT_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss"
-        const val OUTPUT_DATE_FORMAT = "dd/MM/yyyy"
-        val inputDateFormatter = SimpleDateFormat(INPUT_DATE_FORMAT)
-        val outputDateFormatter = SimpleDateFormat(OUTPUT_DATE_FORMAT)
+        private const val INPUT_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss"
+        private const val OUTPUT_DATE_FORMAT = "dd/MM/yyyy"
+        val inputDateFormatter = SimpleDateFormat(INPUT_DATE_FORMAT, Locale("nl"))
+        val outputDateFormatter = SimpleDateFormat(OUTPUT_DATE_FORMAT, Locale("nl"))
     }
 
 }
