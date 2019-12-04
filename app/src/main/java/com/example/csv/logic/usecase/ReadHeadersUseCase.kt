@@ -7,7 +7,7 @@ open class ReadHeadersUseCase(
     private val repository: IRepository
 ) {
 
-    open fun execute(): Row {
+    open suspend fun execute(): Row {
         return repository.readHeaders()
     }
 

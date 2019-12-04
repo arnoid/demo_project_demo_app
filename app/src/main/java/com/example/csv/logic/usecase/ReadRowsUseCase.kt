@@ -7,7 +7,7 @@ open class ReadRowsUseCase(
     private val repository: IRepository
 ) {
 
-    open fun execute(): List<Row> {
+    open suspend fun execute(): List<Row> {
         return repository.readRows()
     }
 

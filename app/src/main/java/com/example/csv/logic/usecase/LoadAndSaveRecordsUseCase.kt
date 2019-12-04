@@ -17,7 +17,7 @@ open class LoadAndSaveRecordsUseCase(
     private val getReader: () -> Reader = { context.resources.openRawResource(R.raw.issues).reader() }
 ) {
 
-    open fun execute(force: Boolean = false) {
+    open suspend fun execute(force: Boolean = false) {
         if (!repository.isEmpty() && !force) {
             return
         }
