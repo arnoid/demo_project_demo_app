@@ -8,6 +8,7 @@ import com.example.parser.api.IParser
 import com.nhaarman.mockitokotlin2.*
 import com.nhaarman.mockitokotlin2.internal.createInstance
 import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
@@ -48,7 +49,7 @@ class LoadAndSaveRecordsUseCaseTest {
     }
 
     @Test
-    fun testNormalRunAndRepositoryIsEmpty() {
+    fun testNormalRunAndRepositoryIsEmpty() = runBlocking{
         isRepositoryEmpty = true
         useCase.execute()
 
@@ -86,7 +87,7 @@ class LoadAndSaveRecordsUseCaseTest {
     }
 
     @Test
-    fun testNormalRunAndRepositoryIsNotEmpty() {
+    fun testNormalRunAndRepositoryIsNotEmpty() = runBlocking{
         isRepositoryEmpty = false
         useCase.execute()
 
@@ -98,7 +99,7 @@ class LoadAndSaveRecordsUseCaseTest {
     }
 
     @Test
-    fun testNormalRunAndRepositoryIsNotEmptyAndForced() {
+    fun testNormalRunAndRepositoryIsNotEmptyAndForced() = runBlocking{
         isRepositoryEmpty = false
         useCase.execute(true)
 
@@ -135,6 +136,6 @@ class LoadAndSaveRecordsUseCaseTest {
         verifyNoMoreInteractions(repository)
     }
 
-    inline fun <reified T : Any> any() = Mockito.any(T::class.java) ?: createInstance<T>()
+    inline fun <reified T : Any> any() = Mockito.any(T::class.java) ?: createInstance()
 
 }

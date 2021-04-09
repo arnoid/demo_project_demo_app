@@ -7,6 +7,7 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -29,7 +30,7 @@ class ReadHeadersUseCaseTest {
     }
 
     @Test
-    fun testEmptyHeaders() {
+    fun testEmptyHeaders() = runBlocking{
         val headers = useCase.execute()
 
         assertTrue(headers.cells.isEmpty())
@@ -39,7 +40,7 @@ class ReadHeadersUseCaseTest {
     }
 
     @Test
-    fun testNonEmptyHeaders() {
+    fun testNonEmptyHeaders() = runBlocking{
         headers.cells = listOf(
             Cell.from("a"),
             Cell.from("b"),
